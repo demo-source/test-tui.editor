@@ -1,0 +1,1 @@
+web: npx cross-env NODE_ENV=production node app.js

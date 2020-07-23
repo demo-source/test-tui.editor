@@ -1,0 +1,30 @@
+{
+  "name": "@demo-source/test-tui.editor",
+  "version": "0.0.0",
+  "description": "Test tui.editor https://github.com/nhn/tui.editor",
+  "license": "Unlicense",
+  "repository": "github:demo-source/test-tui.editor",
+  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "app.js"
+  ],
+  "devDependencies": {
+    "@nodutilus/eslint-config": "latest",
+    "eslint": "latest",
+    "sqlite3": "latest"
+  },
+  "dependencies": {
+    "fastify": "^3.1.1",
+    "fastify-static": "^3.2.0",
+    "fastify-compress": "^3.2.2",
+    "sequelize": "^6.3.3",
+    "pg": "^8.3.0",
+    "cross-env": "^7.0.2"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
