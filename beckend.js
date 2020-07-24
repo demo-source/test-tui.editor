@@ -66,11 +66,30 @@ async function newsUpdate(request, reply) {
 }
 
 
+async function newsDelete(request, reply) {
+  const { deletedRows } = request.body
+
+  for (const deletedRow of deletedRows) {
+    await this.db.News.destroy({
+      where: {
+        id: deletedRow.id
+      }
+    })
+  }
+
+  reply.send({
+    result: true,
+    data: {}
+  })
+}
+
+
 export default fastifyPlugin(function routes(app, opts, done) {
   app
     .get('/news/list/', newsList)
     .post('/news/create/', newsCreate)
-    .put('/news/update/', newsUpdate)
+    .post('/news/update/', newsUpdate)
+    .post('/news/delete/', newsDelete)
 
   done()
 })
