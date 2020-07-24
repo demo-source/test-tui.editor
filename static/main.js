@@ -13,7 +13,6 @@ const newsListGridDataSource = {
 const newsListGrid = new Grid({
   el: document.getElementById('news-list-grid'),
   bodyHeight: 'fitToParent',
-  keyColumnName: 'id',
   data: newsListGridDataSource,
   pageOptions: {
     perPage: 5
@@ -72,8 +71,14 @@ newsListGrid.on('editingFinish', () => {
 newsListGrid.on('focusChange', ({ instance, rowKey }) => {
   console.log(instance.getRow(rowKey))
 })
-newsListGrid.on('successResponse', (data) => {
-  console.log(data)
+newsListGrid.on('successResponse', ({ instance, xhr }) => {
+  const result = JSON.parse(xhr.responseText)
+
+  if (result.event in { createData: 1, updateData: 1 }) {
+    for (const item of result.data.contents) {
+      instance.setRow(item.rowKey, item)
+    }
+  }
 })
 
 

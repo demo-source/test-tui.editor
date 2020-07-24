@@ -12,6 +12,7 @@ async function newsList(request, reply) {
 
   reply.send({
     result: true,
+    event: 'readData',
     data: {
       contents: news,
       pagination: { page: Number(page), totalCount }
@@ -25,11 +26,15 @@ async function newsCreate(request, reply) {
   const contents = []
 
   for (const createdRow of createdRows) {
-    contents.push(await this.db.News.create(createdRow))
+    const row = (await this.db.News.create(createdRow)).toJSON()
+
+    row.rowKey = createdRow.rowKey
+    contents.push(row)
   }
 
   reply.send({
     result: true,
+    event: 'createData',
     data: { contents }
   })
 }
@@ -46,11 +51,16 @@ async function newsUpdate(request, reply) {
           id: updatedRow.id
         }
       })
-      contents.push(await this.db.News.findByPk(updatedRow.id))
+
+      const row = (await this.db.News.findByPk(updatedRow.id)).toJSON()
+
+      row.rowKey = updatedRow.rowKey
+      contents.push(row)
     }
   }
   reply.send({
     result: true,
+    event: 'updateData',
     data: { contents }
   })
 }
