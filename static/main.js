@@ -1,29 +1,54 @@
 const { Editor } = window.toastui
 const { Grid } = window.tui
-const grid = new Grid({
-  el: document.getElementById('grid'),
+const newsListGrid = new Grid({
+  el: document.getElementById('news-list-grid'),
+  bodyHeight: 'fitToParent',
+  rowHeaders: ['rowNum'],
   data: [{
-    name: 'name',
     title: 'title'
   }],
   scrollX: false,
   scrollY: false,
   columns: [
     {
-      header: 'Page name',
-      name: 'name',
-      editor: 'text'
-    },
-    {
-      header: 'Page title',
+      header: 'Заголок',
       name: 'title',
       editor: 'text'
     }
   ]
 })
-const editor = new Editor({
-  el: document.querySelector('#editor'),
-  height: 'auto',
+const newsParametersGrid = new Grid({
+  el: document.getElementById('news-parameters-grid'),
+  bodyHeight: 'fitToParent',
+  rowHeaders: ['rowNum'],
+  data: [{
+    name: 'url',
+    value: '2020-07-24'
+  }],
+  scrollX: false,
+  scrollY: false,
+  columns: [
+    {
+      header: 'Параметр',
+      name: 'name'
+    },
+    {
+      header: 'Значение',
+      name: 'value',
+      editor: 'text'
+    }
+  ]
+})
+const newsPreviewEditor = new Editor({
+  el: document.getElementById('news-preview-editor'),
+  height: '100%',
+  previewStyle: 'vertical',
+  initialEditType: 'wysiwyg',
+  language: 'ru'
+})
+const newsContentEditor = new Editor({
+  el: document.getElementById('news-content-editor'),
+  height: '100%',
   previewStyle: 'vertical',
   initialEditType: 'wysiwyg',
   language: 'ru'
