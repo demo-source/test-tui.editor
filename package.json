@@ -25,6 +25,7 @@
     "cross-env": "^7.0.2"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "testPG": "npx cross-env --DATABASE=postgres://postgres:postgres@localhost:5432/test-tui.editor node app.js"
   }
 }

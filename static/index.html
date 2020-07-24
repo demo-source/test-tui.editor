@@ -8,6 +8,7 @@
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@toast-ui/editor@2/dist/toastui-editor.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5/lib/codemirror.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tui-pagination@3/dist/tui-pagination.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tui-grid@4/dist/tui-grid.css">
   <link rel="stylesheet" href="/main.css">
 </head>
@@ -16,7 +17,10 @@
 
   <div class="dashboard">
 
-    <div class="title news-list-title">Список новостей</div>
+    <div class="title news-list-title">
+      <span>Список новостей</span>
+      <button id="append-news">+</button>
+    </div>
     <div class="title news-preview-title">Текст предпросмотра</div>
     <div class="content news-list">
       <div id="news-list-grid"></div>
@@ -41,6 +45,7 @@
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5/lib/codemirror.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@toast-ui/editor@2/dist/toastui-editor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@toast-ui/editor@2/dist/i18n/ru-ru.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tui-pagination@3/dist/tui-pagination.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tui-grid@4/dist/tui-grid.js"></script>
 <script type="module" src="/main.js"></script>
 
