@@ -101,10 +101,9 @@ newsListGrid.on('successResponse', ({ instance, xhr }) => {
   const result = JSON.parse(xhr.responseText)
 
   if (result.event in { createData: 1, updateData: 1 }) {
-    instance.reloadData()
-    // for (const item of result.data.contents) {
-    //   instance.setRow(item.rowKey, item)
-    // }
+    for (const item of result.data.contents) {
+      instance.setRow(item.rowKey, item)
+    }
   }
 })
 
@@ -116,6 +115,10 @@ appendNews.addEventListener('click', () => {
 })
 
 removeNews.addEventListener('click', () => {
-  newsListGrid.removeRow(newsListGrid.getFocusedCell())
-  newsListGrid.request('deleteData', { showConfirm: false })
+  const focused = newsListGrid.getFocusedCell()
+
+  if (focused && focused.rowKey) {
+    newsListGrid.removeRow(focused.rowKey)
+    newsListGrid.request('deleteData', { showConfirm: false })
+  }
 })
