@@ -27,3 +27,10 @@ body {
 .hide {
   display: none;
 }
+
+button.editor-save-button {
+  background: none;
+  color: green;
+  width: 69px;
+  text-decoration: underline;
+}

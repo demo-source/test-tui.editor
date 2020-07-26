@@ -4,41 +4,28 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Test tui.editor</title>
+  <title>News - Test tui.editor</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@toast-ui/editor@2/dist/toastui-editor.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5/lib/codemirror.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tui-pagination@3/dist/tui-pagination.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tui-grid@4/dist/tui-grid.css">
-  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="./main.css">
 </head>
 
 <body>
 
   <div class="dashboard">
-
-    <div class="title news-list-title">
-      <a href="/news/" target="_blank">Список новостей</a>
-      <button id="append-news">+</button>
-      <button id="remove-news">-</button>
+    <div></div>
+    <div>Последние 10 новостей</div>
+    <div></div>
+    <div></div>
+    <div>
+      <div id="news-list"></div>
     </div>
-    <div class="title news-preview-title">Текст предпросмотра</div>
-    <div class="content news-list">
-      <div id="news-list-grid"></div>
-    </div>
-    <div class="content news-preview">
-      <div id="news-preview-editor"></div>
-    </div>
-
-    <div class="title news-parameters-title">Параметры новости</div>
-    <div class="title news-content-title">Текст новости</div>
-    <div class="content news-parameters">
-      <div id="news-parameters-grid"></div>
-    </div>
-    <div class="content news-content">
-      <div id="news-content-editor"></div>
-    </div>
-
+    <div></div>
+    <div></div>
+    <div></div>
     <div></div>
   </div>
 
@@ -49,6 +36,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@toast-ui/editor@2/dist/i18n/ru-ru.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tui-pagination@3/dist/tui-pagination.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tui-grid@4/dist/tui-grid.js"></script>
-<script type="module" src="/main.js"></script>
+<script type="module" src="./main.js"></script>
 
 </html>

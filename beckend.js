@@ -2,7 +2,7 @@ import fastifyPlugin from 'fastify-plugin'
 
 
 async function newsList(request, reply) {
-  const { perPage, page } = request.query
+  const { perPage, page } = request.body
   const news = await this.db.News.findAll({
     order: [['id', 'DESC']],
     offset: Number(perPage) * (Number(page) - 1),
@@ -86,7 +86,7 @@ async function newsDelete(request, reply) {
 
 export default fastifyPlugin(function routes(app, opts, done) {
   app
-    .get('/news/list/', newsList)
+    .post('/news/list/', newsList)
     .post('/news/create/', newsCreate)
     .post('/news/update/', newsUpdate)
     .post('/news/delete/', newsDelete)

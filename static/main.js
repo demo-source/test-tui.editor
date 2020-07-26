@@ -2,7 +2,7 @@ const { Editor } = window.toastui
 const { Grid } = window.tui
 const newsListGridDataSource = {
   api: {
-    readData: { url: '/news/list/', method: 'GET' },
+    readData: { url: '/news/list/', method: 'POST' },
     createData: { url: '/news/create/', method: 'POST' },
     updateData: { url: '/news/update/', method: 'POST' },
     modifyData: { url: '/news/modify/', method: 'PUT' },
@@ -59,6 +59,7 @@ const newsPreviewEditor = new Editor({
   initialEditType: 'wysiwyg',
   language: 'ru'
 })
+const toolbarPE = newsPreviewEditor.getUI().getToolbar()
 const newsContentEditorEl = document.getElementById('news-content-editor')
 const newsContentEditor = new Editor({
   el: newsContentEditorEl,
@@ -67,21 +68,60 @@ const newsContentEditor = new Editor({
   initialEditType: 'wysiwyg',
   language: 'ru'
 })
+const toolbarCE = newsContentEditor.getUI().getToolbar()
+let currentNewsData = null
 
 
 function hideEdit() {
+  currentNewsData = null
+  newsPreviewEditor.setMarkdown('')
+  newsContentEditor.setMarkdown('')
   newsParametersGridEl.classList.add('hide')
   newsPreviewEditorEL.classList.add('hide')
   newsContentEditorEl.classList.add('hide')
 }
 
 
-function showEdit() {
+function showEdit(editData) {
+  currentNewsData = editData
+  newsPreviewEditor.setMarkdown(editData.preview || '')
+  newsContentEditor.setMarkdown(editData.content || '')
   newsParametersGridEl.classList.remove('hide')
   newsPreviewEditorEL.classList.remove('hide')
   newsContentEditorEl.classList.remove('hide')
 }
 
+newsPreviewEditor.eventManager.addEventType('savePreviewEditor')
+newsPreviewEditor.eventManager.listen('savePreviewEditor', () => {
+  currentNewsData.preview = newsPreviewEditor.getMarkdown()
+  newsListGrid.setRow(currentNewsData.rowKey, currentNewsData)
+  newsListGrid.request('updateData', { showConfirm: false })
+})
+toolbarPE.insertItem(0, {
+  type: 'button',
+  options: {
+    className: 'editor-save-button',
+    event: 'savePreviewEditor',
+    tooltip: 'Сохранить превью новости',
+    text: 'Сохранить'
+  }
+})
+
+newsContentEditor.eventManager.addEventType('saveContentEditor')
+newsContentEditor.eventManager.listen('saveContentEditor', () => {
+  currentNewsData.content = newsContentEditor.getMarkdown()
+  newsListGrid.setRow(currentNewsData.rowKey, currentNewsData)
+  newsListGrid.request('updateData', { showConfirm: false })
+})
+toolbarCE.insertItem(0, {
+  type: 'button',
+  options: {
+    className: 'editor-save-button',
+    event: 'saveContentEditor',
+    tooltip: 'Сохранить новость',
+    text: 'Сохранить'
+  }
+})
 
 hideEdit()
 
@@ -89,10 +129,7 @@ newsListGrid.on('editingFinish', () => {
   newsListGrid.request('updateData', { showConfirm: false })
 })
 newsListGrid.on('focusChange', ({ instance, prevRowKey, rowKey }) => {
-  if (prevRowKey === null) {
-    showEdit()
-  }
-  console.log(instance.getRow(rowKey))
+  showEdit(instance.getRow(rowKey))
 })
 newsListGrid.on('afterPageMove', () => {
   hideEdit()
@@ -100,7 +137,7 @@ newsListGrid.on('afterPageMove', () => {
 newsListGrid.on('successResponse', ({ instance, xhr }) => {
   const result = JSON.parse(xhr.responseText)
 
-  if (result.event in { createData: 1, updateData: 1 }) {
+  if (result.event in { createData: 1 }) {
     for (const item of result.data.contents) {
       instance.setRow(item.rowKey, item)
     }
@@ -115,10 +152,9 @@ appendNews.addEventListener('click', () => {
 })
 
 removeNews.addEventListener('click', () => {
-  const focused = newsListGrid.getFocusedCell()
-
-  if (focused && focused.rowKey) {
-    newsListGrid.removeRow(focused.rowKey)
+  if (currentNewsData) {
+    newsListGrid.removeRow(currentNewsData.rowKey)
     newsListGrid.request('deleteData', { showConfirm: false })
+    hideEdit()
   }
 })
