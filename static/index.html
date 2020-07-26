@@ -18,11 +18,14 @@
   <div class="dashboard">
 
     <div class="title news-list-title">
-      <a href="/news/" target="_blank">Список новостей</a>
+      <span>Список новостей</span>
       <button id="append-news">+</button>
       <button id="remove-news">-</button>
     </div>
-    <div class="title news-preview-title">Текст предпросмотра</div>
+    <div class="title news-preview-title">
+      <span>Текст предпросмотра</span>
+      <a href="/news/" target="_blank">Лента новостей</a>
+    </div>
     <div class="content news-list">
       <div id="news-list-grid"></div>
     </div>
@@ -31,7 +34,10 @@
     </div>
 
     <div class="title news-parameters-title">Параметры новости</div>
-    <div class="title news-content-title">Текст новости</div>
+    <div class="title news-content-title">
+      <span>Текст новости</span>
+      <a id="open-post" class="hide" href="/news/" target="_blank">Открыть новость</a>
+    </div>
     <div class="content news-parameters">
       <div id="news-parameters-grid"></div>
     </div>

@@ -10,7 +10,9 @@ const app = fastify({ logger: !productionMode })
 const host = process.env.NODE_HOST || '0.0.0.0'
 const port = Number(process.env.NODE_PORT || process.env.PORT || 3000)
 const staticRoot = resolve(__dirname, './static')
-const connectionString = process.env.DATABASE || `sqlite:${resolve(__dirname, './database.sqlite')}`
+const connectionString = process.env.DATABASE ||
+  process.env.DATABASE_URL ||
+  `sqlite:${resolve(__dirname, './database.sqlite')}`
 
 app
   .register(fastifyCompress)

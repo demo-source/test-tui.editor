@@ -84,12 +84,23 @@ async function newsDelete(request, reply) {
 }
 
 
+async function getByUrl(request, reply) {
+  const { url } = request.body
+  const data = await this.db.News.findOne({
+    where: { url }
+  })
+
+  return data
+}
+
+
 export default fastifyPlugin(function routes(app, opts, done) {
   app
     .post('/news/list/', newsList)
     .post('/news/create/', newsCreate)
     .post('/news/update/', newsUpdate)
     .post('/news/delete/', newsDelete)
+    .post('/news/get-by-url/', getByUrl)
 
   done()
 })

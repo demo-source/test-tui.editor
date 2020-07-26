@@ -34,3 +34,9 @@ button.editor-save-button {
   width: 69px;
   text-decoration: underline;
 }
+
+.news-preview-title,
+.news-content-title {
+  display: flex;
+  justify-content: space-between;
+}

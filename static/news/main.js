@@ -1,17 +1,25 @@
 const Viewer = window.toastui.Editor.factory
 
 
-function createPreview(preview) {
-  const el = document.createElement('div')
+function createPreview(data) {
+  const elNews = document.createElement('div')
+  const elTitle = document.createElement('a')
+  const elPreview = document.createElement('div')
 
-  el.editor = new Viewer({
-    el,
+  elTitle.textContent = data.title
+  elTitle.classList.add('preview-title')
+  elTitle.href = `/news/read/?url=${data.url}`
+
+  elNews.append(elTitle)
+  elNews.append(elPreview)
+  elNews.editor = new Viewer({
+    el: elPreview,
     height: 'auto',
     viewer: true,
-    initialValue: preview || ''
+    initialValue: data.preview || '... Пусто ...'
   })
 
-  return el
+  return elNews
 }
 
 window
@@ -28,7 +36,7 @@ window
     const newsList = document.getElementById('news-list')
 
     for (const item of contents) {
-      const preview = createPreview(item.preview)
+      const preview = createPreview(item)
 
       newsList.append(preview)
     }

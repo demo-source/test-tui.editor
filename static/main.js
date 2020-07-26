@@ -69,6 +69,7 @@ const newsContentEditor = new Editor({
   language: 'ru'
 })
 const toolbarCE = newsContentEditor.getUI().getToolbar()
+const openPost = document.getElementById('open-post')
 let currentNewsData = null
 
 
@@ -79,6 +80,7 @@ function hideEdit() {
   newsParametersGridEl.classList.add('hide')
   newsPreviewEditorEL.classList.add('hide')
   newsContentEditorEl.classList.add('hide')
+  openPost.classList.add('hide')
 }
 
 
@@ -86,9 +88,11 @@ function showEdit(editData) {
   currentNewsData = editData
   newsPreviewEditor.setMarkdown(editData.preview || '')
   newsContentEditor.setMarkdown(editData.content || '')
+  openPost.href = `/news/read/?url=${editData.url}`
   newsParametersGridEl.classList.remove('hide')
   newsPreviewEditorEL.classList.remove('hide')
   newsContentEditorEl.classList.remove('hide')
+  openPost.classList.remove('hide')
 }
 
 newsPreviewEditor.eventManager.addEventType('savePreviewEditor')
@@ -140,13 +144,19 @@ newsListGrid.on('successResponse', ({ instance, xhr }) => {
   if (result.event in { createData: 1 }) {
     for (const item of result.data.contents) {
       instance.setRow(item.rowKey, item)
+      if (item.rowKey === currentNewsData.rowKey) {
+        currentNewsData = instance.getRow(item.rowKey)
+      }
     }
   }
 })
 
 appendNews.addEventListener('click', () => {
+  const date = (new Date()).toJSON()
+
   newsListGrid.prependRow({
-    title: 'Новая новость от ' + (new Date()).toJSON()
+    title: 'Новая новость от ' + date,
+    url: date
   }, { focus: true })
   newsListGrid.request('createData', { showConfirm: false })
 })
